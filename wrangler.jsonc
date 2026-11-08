@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cloudflare-computer-mcp",
+  "main": "src/index.ts",
+  "workers_dev": true,
+  "compatibility_date": "2026-06-17",
+  "compatibility_flags": ["nodejs_compat", "experimental"],
+  "worker_loaders": [{ "binding": "LOADER" }],
+  "containers": [
+    {
+      "class_name": "ComputerMCP",
+      "scheduling_policy": "durable_object",
+      "images": {
+        "app": { "dockerfile": "./Dockerfile" }
+      }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "COMPUTER_MCP", "class_name": "ComputerMCP" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ComputerMCP"] }]
+}
